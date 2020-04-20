@@ -63,14 +63,13 @@
     };
   };
 
+  let selectedFeaturesTags = [];
+
+  const filterFeature = function(advertisement) {
+    return selectedFeaturesTags.every(feature => advertisement.offer.features.includes(feature));
+  };
+
   const filterData = function(data) {
-    //собираем массив features с выбранными удобствами
-
-    let selectedFeaturesTags = [];
-
-    //обнуляем массив каждый раз при вызове функции, чтобы не было записи повторных свойств
-
-    selectedFeaturesTags.length = 0;
 
     selectedFeaturesTags = inputArr.reduce(
       (tags, input) => {
@@ -83,14 +82,12 @@
       []
     );
 
-    //фильтрация данных
-
     filteredData = data.
     filter(filterApartmentType).
     filter(filterRoomsNumber).
     filter(filterPricePerNight).
     filter(filterCapacity).
-    filter(advertisement => selectedFeaturesTags.every(feature => advertisement.offer.features.includes(feature)));
+    filter(filterFeature);
 
     return filteredData;
   };
